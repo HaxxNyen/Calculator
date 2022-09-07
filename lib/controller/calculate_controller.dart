@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:math_expressions/math_expressions.dart';
 
@@ -6,11 +7,17 @@ class CalculateController extends GetxController {
   UserInput = What User entered with the keyboard .
   UserOutput = Calculate the numbers that the user entered and put into userOutPut variable.
   */
+  TextEditingController inputTextController = TextEditingController();
   var userInput = "";
   var userOutput = "";
 
   /// Equal Button Pressed Func
   equalPressed() {
+    evaluateExpression();
+    update();
+  }
+
+  evaluateExpression() {
     String userInputFC = userInput;
     userInputFC = userInputFC.replaceAll("x", "*");
     Parser p = Parser();
@@ -21,14 +28,13 @@ class CalculateController extends GetxController {
     RegExp regex = RegExp(r'([.]*0)(?!.*\d)');
 
     userOutput = eval.toString().replaceAll(regex, '');
-
-    update();
   }
 
   /// Clear Button Pressed Func
   clearInputAndOutput() {
     userInput = "";
     userOutput = "";
+    inputTextController.text = "";
     update();
   }
 
@@ -40,8 +46,9 @@ class CalculateController extends GetxController {
 
   /// on Number Button Tapped
   onBtnTapped(List<String> buttons, int index) {
-    userInput.replaceAll(new RegExp(r'^0+(?=.)'), '');
     userInput += buttons[index];
+    inputTextController.text = userInput;
+    evaluateExpression();
     update();
   }
 }

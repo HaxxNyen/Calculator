@@ -249,19 +249,20 @@ class MainScreen extends StatelessWidget {
           padding: const EdgeInsets.only(right: 20, top: 70),
           child: Column(
             children: [
-              Container(
-                alignment: Alignment.centerRight,
-                //yahan pay textformfiled chnge krni hai..
-                child: Text(
-                  controller.userInput,
-                  style: TextStyle(
-                      color:
-                          themeController.isDark ? Colors.white : Colors.black,
-                      fontSize: 48),
-                ),
-              ),
-              const SizedBox(
-                height: 4,
+              TextFormField(
+                //readOnly: true,
+                //showCursor: true,
+                maxLines: 2,
+                cursorRadius: Radius.circular(2),
+                cursorWidth: 4,
+                cursorHeight: 8,
+                keyboardType: TextInputType.none,
+                decoration: const InputDecoration(border: InputBorder.none),
+                controller: controller.inputTextController,
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                    color: themeController.isDark ? Colors.white : Colors.black,
+                    fontSize: 32),
               ),
               Container(
                 alignment: Alignment.bottomRight,
