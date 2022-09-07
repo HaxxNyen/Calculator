@@ -18,7 +18,10 @@ class CalculateController extends GetxController {
     ContextModel ctx = ContextModel();
     double eval = exp.evaluate(EvaluationType.REAL, ctx);
 
-    userOutput = eval.toString();
+    RegExp regex = RegExp(r'([.]*0)(?!.*\d)');
+
+    userOutput = eval.toString().replaceAll(regex, '');
+
     update();
   }
 
@@ -37,6 +40,7 @@ class CalculateController extends GetxController {
 
   /// on Number Button Tapped
   onBtnTapped(List<String> buttons, int index) {
+    userInput.replaceAll(new RegExp(r'^0+(?=.)'), '');
     userInput += buttons[index];
     update();
   }

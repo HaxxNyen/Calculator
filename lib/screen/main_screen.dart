@@ -11,26 +11,26 @@ class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
 
   final List<String> buttonsList = [
-    "C",
-    "DEL",
-    "%",
-    "/",
-    "9",
-    "8",
-    "7",
-    "x",
-    "6",
-    "5",
-    "4",
-    "-",
-    "3",
-    "2",
-    "1",
-    "+",
-    "0",
-    ".",
-    "ANS",
-    "=",
+    'C',
+    'DEL',
+    '+/-',
+    '/',
+    '7',
+    '8',
+    '9',
+    'x',
+    '4',
+    '5',
+    '6',
+    '-',
+    '1',
+    '2',
+    '3',
+    '+',
+    '%',
+    '0',
+    '.',
+    '=',
   ];
 
   @override
@@ -61,19 +61,18 @@ class MainScreen extends StatelessWidget {
     return Expanded(
         flex: 2,
         child: Container(
-          padding: const EdgeInsets.all(3),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           decoration: BoxDecoration(
-              color: themeController.isDark
-                  ? DarkColors.sheetBgColor
-                  : LightColors.sheetBgColor,
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+            color: themeController.isDark
+                ? DarkColors.sheetBgColor
+                : LightColors.sheetBgColor,
+          ),
           child: GridView.builder(
               physics: const NeverScrollableScrollPhysics(),
               itemCount: buttonsList.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4),
-              itemBuilder: (contex, index) {
+              itemBuilder: (context, index) {
                 switch (index) {
 
                   /// CLEAR BTN
@@ -84,10 +83,10 @@ class MainScreen extends StatelessWidget {
                         },
                         color: themeController.isDark
                             ? DarkColors.btnBgColor
-                            : LightColors.btnBgColor,
+                            : LightColors.operatorColor,
                         textColor: themeController.isDark
                             ? DarkColors.leftOperatorColor
-                            : LightColors.leftOperatorColor,
+                            : LightColors.operatorBtnTextColor,
                         text: buttonsList[index]);
 
                   /// DELETE BTN
@@ -98,10 +97,72 @@ class MainScreen extends StatelessWidget {
                         },
                         color: themeController.isDark
                             ? DarkColors.btnBgColor
-                            : LightColors.btnBgColor,
+                            : LightColors.operatorColor,
                         textColor: themeController.isDark
                             ? DarkColors.leftOperatorColor
-                            : LightColors.leftOperatorColor,
+                            : LightColors.operatorBtnTextColor,
+                        text: buttonsList[index]);
+
+                  /// Plus/Minus Button
+                  case 2:
+                    return NxButton(
+                        buttonTapped: () {
+                          //controller.deleteBtnAction();
+                        },
+                        color: themeController.isDark
+                            ? DarkColors.btnBgColor
+                            : LightColors.btnOperatorBgColor,
+                        textColor: themeController.isDark
+                            ? DarkColors.leftOperatorColor
+                            : LightColors.operatorBtnTextColor,
+                        text: buttonsList[index]);
+                  case 3:
+                    return NxButton(
+                        buttonTapped: () {
+                          controller.onBtnTapped(buttonsList, index);
+                        },
+                        color: themeController.isDark
+                            ? DarkColors.btnBgColor
+                            : LightColors.btnOperatorBgColor,
+                        textColor: themeController.isDark
+                            ? DarkColors.leftOperatorColor
+                            : LightColors.operatorBtnTextColor,
+                        text: buttonsList[index]);
+                  case 7:
+                    return NxButton(
+                        buttonTapped: () {
+                          controller.onBtnTapped(buttonsList, index);
+                        },
+                        color: themeController.isDark
+                            ? DarkColors.btnBgColor
+                            : LightColors.btnOperatorBgColor,
+                        textColor: themeController.isDark
+                            ? DarkColors.leftOperatorColor
+                            : LightColors.operatorBtnTextColor,
+                        text: buttonsList[index]);
+                  case 11:
+                    return NxButton(
+                        buttonTapped: () {
+                          controller.onBtnTapped(buttonsList, index);
+                        },
+                        color: themeController.isDark
+                            ? DarkColors.btnBgColor
+                            : LightColors.btnOperatorBgColor,
+                        textColor: themeController.isDark
+                            ? DarkColors.leftOperatorColor
+                            : LightColors.operatorBtnTextColor,
+                        text: buttonsList[index]);
+                  case 15:
+                    return NxButton(
+                        buttonTapped: () {
+                          controller.onBtnTapped(buttonsList, index);
+                        },
+                        color: themeController.isDark
+                            ? DarkColors.btnBgColor
+                            : LightColors.btnOperatorBgColor,
+                        textColor: themeController.isDark
+                            ? DarkColors.leftOperatorColor
+                            : LightColors.operatorBtnTextColor,
                         text: buttonsList[index]);
 
                   /// EQUAL BTN
@@ -112,10 +173,10 @@ class MainScreen extends StatelessWidget {
                         },
                         color: themeController.isDark
                             ? DarkColors.btnBgColor
-                            : LightColors.btnBgColor,
+                            : LightColors.leftOperatorColor,
                         textColor: themeController.isDark
                             ? DarkColors.leftOperatorColor
-                            : LightColors.leftOperatorColor,
+                            : LightColors.operatorBtnTextColor,
                         text: buttonsList[index]);
 
                   default:
@@ -190,16 +251,17 @@ class MainScreen extends StatelessWidget {
             children: [
               Container(
                 alignment: Alignment.centerRight,
+                //yahan pay textformfiled chnge krni hai..
                 child: Text(
                   controller.userInput,
                   style: TextStyle(
                       color:
                           themeController.isDark ? Colors.white : Colors.black,
-                      fontSize: 25),
+                      fontSize: 48),
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 4,
               ),
               Container(
                 alignment: Alignment.bottomRight,
@@ -219,7 +281,7 @@ class MainScreen extends StatelessWidget {
 
   ///
   bool isOperator(String y) {
-    if (y == "%" || y == "/" || y == "x" || y == "-" || y == "+" || y == "=") {
+    if (y == "%" || y == "/" || y == "x" || y == "-" || y == "+") {
       return true;
     }
     return false;

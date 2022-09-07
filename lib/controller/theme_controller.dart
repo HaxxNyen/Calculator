@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 class ThemeController extends GetxController {
-  bool isDark = true;
+  bool isDark = false;
 
   lightTheme() {
     isDark = false;

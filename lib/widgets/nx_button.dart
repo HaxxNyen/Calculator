@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class NxButton extends StatelessWidget {
   final Color color;
@@ -16,14 +17,11 @@ class NxButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: buttonTapped,
-      child: Container(
-        margin: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(8),
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(backgroundColor: color),
+        onPressed: buttonTapped,
         child: Center(
           child: Text(
             text,
