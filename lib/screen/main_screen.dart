@@ -43,13 +43,15 @@ class MainScreen extends StatelessWidget {
         backgroundColor: themeController.isDark
             ? DarkColors.scaffoldBgColor
             : LightColors.scaffoldBgColor,
-        body: Column(
-          children: [
-            GetBuilder<CalculateController>(builder: (context) {
-              return outPutSection(themeController, controller);
-            }),
-            inPutSection(themeController, controller),
-          ],
+        body: SafeArea(
+          child: Column(
+            children: [
+              GetBuilder<CalculateController>(builder: (context) {
+                return outPutSection(themeController, controller);
+              }),
+              inPutSection(themeController, controller),
+            ],
+          ),
         ),
       );
     });
@@ -213,7 +215,7 @@ class MainScreen extends StatelessWidget {
               color: themeController.isDark
                   ? DarkColors.sheetBgColor
                   : LightColors.sheetBgColor,
-              borderRadius: BorderRadius.circular(20)),
+              borderRadius: BorderRadius.circular(10)),
           child: Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -246,14 +248,17 @@ class MainScreen extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(right: 20, top: 70),
+          padding: const EdgeInsets.only(right: 20, top: 10),
           child: Column(
             children: [
               TextFormField(
+                enableInteractiveSelection: true,
+                onChanged: (val) => controller.updateCursorPosition(val),
+                onTap: controller.getCursorPosition,
                 //readOnly: true,
                 //showCursor: true,
                 maxLines: 2,
-                cursorRadius: Radius.circular(2),
+                cursorRadius: const Radius.circular(2),
                 cursorWidth: 4,
                 cursorHeight: 8,
                 keyboardType: TextInputType.none,
@@ -262,7 +267,7 @@ class MainScreen extends StatelessWidget {
                 textAlign: TextAlign.end,
                 style: TextStyle(
                     color: themeController.isDark ? Colors.white : Colors.black,
-                    fontSize: 32),
+                    fontSize: 40),
               ),
               Container(
                 alignment: Alignment.bottomRight,

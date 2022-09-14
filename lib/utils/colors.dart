@@ -12,9 +12,9 @@ class DarkColors {
 class LightColors {
   static Color scaffoldBgColor = Colors.grey.shade200;
   static Color sheetBgColor = Colors.grey.shade200;
-  static Color btnBgColor = Color.fromARGB(255, 243, 243, 243);
+  static Color btnBgColor = const Color.fromARGB(255, 243, 243, 243);
   static Color btnOperatorBgColor = Colors.indigo;
   static Color operatorBtnTextColor = Colors.white;
-  static Color operatorColor = Color(0xffEB6666);
-  static Color leftOperatorColor = Color.fromARGB(255, 1, 157, 128);
+  static Color operatorColor = const Color(0xffEB6666);
+  static Color leftOperatorColor = const Color.fromARGB(255, 1, 157, 128);
 }
