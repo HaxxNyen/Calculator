@@ -49,6 +49,8 @@ class CalculateController extends GetxController {
   deleteBtnAction() {
     if (isNotEmptyInputText()) {
       if (isSelection) {
+        cursorPosition = 0;
+        updateCursorPosition('');
         inputTextController.text = StringUtils.removeCharAtPosition(
             inputTextController.text, cursorPosition);
         cursorPosition -= 1;
@@ -77,6 +79,8 @@ class CalculateController extends GetxController {
       debugPrint("Selection");
       debugPrint("Old Position is: $cursorPosition");
 
+      cursorPosition = 0;
+      updateCursorPosition("");
       inputTextController.text = StringUtils.addCharAtPosition(
           inputTextController.text, buttons[index], cursorPosition);
       cursorPosition += 1;
@@ -96,19 +100,10 @@ class CalculateController extends GetxController {
   }
 
   bool isValidExpression() {
-    /*if (inputTextController.text.contains("/") ||
-        inputTextController.text.contains("x") ||
-        inputTextController.text.contains("-") ||
-        inputTextController.text.contains("%") ||
-        inputTextController.text.contains("+")) {
-      return true;
-    }*/
-
-//    RegExp regex = RegExp(r'([.]*0)(?!.*\d)');
     RegExp regex = RegExp(
         r'([-+]?[0-9]*\.?[0-9]+[\/\+\-\x\%\(\)])+([-+]?[0-9]*\.?[0-9]+)');
-    //Iterable<RegExpMatch> match = regex.allMatches(inputTextController.text);
-    return inputTextController.text.contains(regex) ? true : false;
+
+    return regex.hasMatch(inputTextController.text) ? true : false;
   }
 
   void getCursorPosition() {
@@ -135,6 +130,7 @@ class CalculateController extends GetxController {
   void updateCursorPosition(String val) {
     previousSelection = inputTextController.selection;
     cursorPosition = previousSelection.base.offset;
+
     update();
   }
 }

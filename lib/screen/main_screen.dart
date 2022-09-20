@@ -87,7 +87,7 @@ class MainScreen extends StatelessWidget {
                             ? DarkColors.btnBgColor
                             : LightColors.operatorColor,
                         textColor: themeController.isDark
-                            ? DarkColors.leftOperatorColor
+                            ? DarkColors.operatorColor
                             : LightColors.operatorBtnTextColor,
                         text: buttonsList[index]);
 
@@ -101,7 +101,7 @@ class MainScreen extends StatelessWidget {
                             ? DarkColors.btnBgColor
                             : LightColors.operatorColor,
                         textColor: themeController.isDark
-                            ? DarkColors.leftOperatorColor
+                            ? DarkColors.operatorColor
                             : LightColors.operatorBtnTextColor,
                         text: buttonsList[index]);
 
@@ -252,7 +252,6 @@ class MainScreen extends StatelessWidget {
           child: Column(
             children: [
               TextFormField(
-                enableInteractiveSelection: true,
                 onChanged: (val) => controller.updateCursorPosition(val),
                 onTap: controller.getCursorPosition,
                 //readOnly: true,

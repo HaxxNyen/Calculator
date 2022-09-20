@@ -6,6 +6,8 @@ class DarkColors {
   static const sheetBgColor = Color(0xff292D36);
   static const btnBgColor = Color.fromARGB(255, 33, 36, 42);
   static const leftOperatorColor = Color.fromARGB(255, 7, 255, 209);
+  static Color operatorBtnTextColor = Colors.indigo;
+  static Color operatorColor = const Color(0xffEB6666);
 }
 
 /// Light Colors
