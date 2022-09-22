@@ -252,7 +252,7 @@ class MainScreen extends StatelessWidget {
           child: Column(
             children: [
               TextFormField(
-                onChanged: (val) => controller.updateCursorPosition(val),
+                onChanged: (val) => controller.updateCursorPosition(),
                 onTap: controller.getCursorPosition,
                 //readOnly: true,
                 //showCursor: true,

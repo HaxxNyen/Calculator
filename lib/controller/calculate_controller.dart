@@ -2,6 +2,7 @@ import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:math_expressions/math_expressions.dart';
+import '../utils/string.dart';
 
 class CalculateController extends GetxController {
   TextEditingController inputTextController = TextEditingController();
@@ -17,7 +18,6 @@ class CalculateController extends GetxController {
     evaluateExpression();
     inputTextController.text = userOutput;
     userOutput = "";
-
     update();
   }
 
@@ -26,13 +26,17 @@ class CalculateController extends GetxController {
     userInputFC = userInputFC.replaceAll("x", "*");
     Parser p = Parser();
 
-    Expression exp = p.parse(userInputFC);
+    Iterable<RegExpMatch> matches = MyStrings.regExAll.allMatches(userInputFC);
+    Expression? exp;
+    for (final m in matches) {
+      exp = p.parse(m[0]!);
+    }
+
     ContextModel ctx = ContextModel();
-    double eval = exp.evaluate(EvaluationType.REAL, ctx);
-
-    RegExp regex = RegExp(r'([.]*0)(?!.*\d)');
-
-    userOutput = eval.toString().replaceAll(regex, '');
+    if (exp != null) {
+      double eval = exp.evaluate(EvaluationType.REAL, ctx);
+      userOutput = eval.toString().replaceAll(MyStrings.regExPeriod, '');
+    }
   }
 
   /// Clear Button Pressed Func
@@ -62,11 +66,8 @@ class CalculateController extends GetxController {
       }
     }
 
-    if (isValidExpression()) {
-      evaluateExpression();
-    } else {
-      userOutput = "";
-    }
+    userOutput = "";
+    evaluateExpression();
 
     update();
   }
@@ -89,21 +90,26 @@ class CalculateController extends GetxController {
 
       debugPrint("New Position is: $cursorPosition");
     } else {
-      inputTextController.text += buttons[index];
+      if (isOperator(buttons[index])) {
+        debugPrint("old Position is: $cursorPosition");
+        updateCursorPosition("");
+        debugPrint("new Position is: $cursorPosition");
+        inputTextController.text = StringUtils.addCharAtPosition(
+            inputTextController.text, buttons[index], cursorPosition);
+      } else {
+        inputTextController.text += buttons[index];
+      }
     }
-
-    if (isValidExpression()) {
-      evaluateExpression();
-    }
+    evaluateExpression();
 
     update();
   }
 
-  bool isValidExpression() {
-    RegExp regex = RegExp(
-        r'([-+]?[0-9]*\.?[0-9]+[\/\+\-\x\%\(\)])+([-+]?[0-9]*\.?[0-9]+)');
-
-    return regex.hasMatch(inputTextController.text) ? true : false;
+  bool isOperator(String y) {
+    if (y == "%" || y == "/" || y == "x" || y == "-" || y == "+") {
+      return true;
+    }
+    return false;
   }
 
   void getCursorPosition() {
@@ -127,7 +133,7 @@ class CalculateController extends GetxController {
     inputTextController.dispose();
   }
 
-  void updateCursorPosition(String val) {
+  void updateCursorPosition() {
     previousSelection = inputTextController.selection;
     cursorPosition = previousSelection.base.offset;
 
